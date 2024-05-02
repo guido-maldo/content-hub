@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load static %}
+{% load content_filters %}
+
+{% block page_tabs %}
+  <a class="nav-link" href="{% url 'videos_page' %}">Videos</a>
+  <a class="nav-link active" aria-current="page" href="{% url 'discussion_page' %}">Discussion</a>
+  <a class="nav-link" href="{% url 'news_page' %}">News</a>
+  <a class="nav-link" href="{% url 'podcasts_page' %}">Podcasts</a>
+{% endblock page_tabs %}
+
+{% block page_header %}
+  <div class="container mb-2">
+    <a class="d-inline-flex align-items-center link-underline link-underline-opacity-0" href="https://www.reddit.com/r/all/hot/" target="_blank">
+      <img src="{% static 'imgs\reddit_icon.svg' %}" class="me-3" height="42px" alt="Reddit logo">
+      <h3>Reddit Trending Now</h3>
+    </a>
+  </div>
+{% endblock page_header %}
+
+{% block page_content %}
+  {% for post in reddit_posts %}
+  <section class="card mb-2">
+    <div class="row no-gutters">
+      <div class="col-2 my-auto ms-3" style="text-align: center;">
+        <div>
+          {% if "http" in post.thumbnail %}
+            <img src="{{post.thumbnail}}" class="border border-black rounded-2" height="195px" width="195px" alt="Reddit post thumbnail">
+          {% else %}
+            <span style="display: inline-block; background-color: #ccccccea; padding: 30px;">
+              <img src="{% static post.thumbnail %}" class="border border-black rounded-2" height="120px" width="120px" alt="Reddit post thumbnail">
+            </span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="card-body">
+          <h4 class="card-title">{{post.title}}</h4>
+          <p class="card-text">
+            <div class="mb-2">
+              <span class="fw-semibold align-text-bottom">{{post.subreddit_name}}</span>
+            </div>
+            <div class="mb-1">
+              <span class="fw-semibold align-text-bottom">{{post.redditor}}</span>
+              <div class="vr mx-1"></div>
+              <span class="align-text-bottom">
+                <span>{{post.post_date|date:"N j, o, f A"}}</span>
+              </span>
+            </div>
+            <div class="mb-3">
+              <span class="align-text-bottom">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                </svg>
+              </span>
+              : <span class="fst-italic">{{post.comments_count|format_thousand_num}}</span> comments
+              <div class="vr mx-1 align-middle"></div>
+              <span class="align-text-bottom">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-up" viewBox="0 0 16 16">
+                  <path d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2 2 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a10 10 0 0 0-.443.05 9.4 9.4 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a9 9 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.2 2.2 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.9.9 0 0 1-.121.416c-.165.288-.503.56-1.066.56z"/>
+                </svg>
+              </span>
+              : <span class="fst-italic">{{post.score|format_thousand_num}}</span> score
+              <div class="vr mx-1 align-middle"></div>
+              <span class="fst-italic" id="post{{post.pk}}Type">{{post.media_type}}</span>
+            </div>
+            <div>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#post{{post.pk}}Modal">
+                View Now
+              </button>
+
+              <div class="modal fade" id="post{{post.pk}}Modal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered justify-content-center">
+                  <div class="modal-content bg-dark bg-gradient">
+                    <div class="modal-body bg-dark bg-gradient" id="reddit-modal-body">
+                      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" class="lucide lucide-x-circle"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg>
+                      </button>
+                      <div class="redditContent">
+                        <div class="reddit-embed-bq">
+                          <a href="{{post.content_url}}"></a>
+                        </div>
+                      </div>
+                      {% if post.media_type == "Hyperlink" %}
+                        <span class="text-light">
+                          Hyperlink: 
+                          <a href="{{post.hyperlink}}" target=”_blank”>
+                            {{post.hyperlink|truncatechars:50}}&nbsp
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right align-baseline" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
+                              <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/>
+                            </svg>
+                          </a>
+                        </span>
+                      {% endif %}
+                    </div>
+                    <div class="modal-footer container-fluid justify-content-between bg-dark ">
+                      {% with prev=post.pk|add:"-1" next=post.pk|add:"1" %}
+                      {% if prev == 0 %}
+                      <button type="button" class="btn btn-primary ms-auto next" data-bs-target="#post{{next}}Modal" data-bs-toggle="modal">Next Post</button>
+                      {% elif prev >= 1 and next <= reddit_posts|length %}
+                      <button type="button" class="btn btn-primary prev" data-bs-target="#post{{prev}}Modal" data-bs-toggle="modal">Previous Post</button>
+                      <button type="button" class="btn btn-primary next" data-bs-target="#post{{next}}Modal" data-bs-toggle="modal">Next Post</button>
+                      {% else %}
+                      <button type="button" class="btn btn-primary me-auto prev" data-bs-target="#post{{prev}}Modal" data-bs-toggle="modal">Previous Post</button>
+                      {% endif %}
+                      {% endwith %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endfor %}
+{% endblock page_content %}

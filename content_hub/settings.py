@@ -29,6 +29,13 @@ environ.Env.read_env(Path(str(BASE_DIR)) / '.env')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
 
+# SECURITY WARNING: keep the api keys used in production secret!
+YOUTUBE_API_KEY = env('YOUTUBE_API_KEY')
+REDDIT_API_KEY = env('REDDIT_API_KEY')
+
+# Client ID can be public and does not need to be kept confidential
+REDDIT_APP_CLIENT_ID = 'kYzvqlx3PYVBSawTVoy-oA'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -46,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # My Apps
     'content.apps.ContentConfig',
+    'content.templatetags.content_filters',
      # Third Party Apps
     'django_apscheduler',
 ]
@@ -128,7 +136,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
@@ -152,3 +160,5 @@ LOGGING = {
         "level": "INFO",
     },
 }
+
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"

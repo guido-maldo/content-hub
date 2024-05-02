@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_tabs %}
+<a class="nav-link" href="{% url 'videos_page' %}">Videos</a>
+<a class="nav-link" href="{% url 'discussion_page' %}">Discussion</a>
+<a class="nav-link active" aria-current="page" href="{% url 'news_page' %}">News</a>
+<a class="nav-link" href="{% url 'podcasts_page' %}">Podcasts</a>
+{% endblock page_tabs %}
+
+{% block page_header %}
+  <div class="container mb-2">
+    <a class="d-inline-flex align-items-center link-underline link-underline-opacity-0" href="https://www.yahoo.com/news" target="_blank">
+      <img src="{% static 'imgs/yahoo_logo.svg' %}" class = "me-3" height="42px" alt="Yahoo News logo">
+      <h3>Latest News & Headlines</h3>
+    </a>
+  </div>
+{% endblock page_header %}
+
+{% block page_content %}
+  {% for article in news %}
+  <section class="card mb-2">
+    <div class="row no-gutters">
+      <div class="col-2 my-2 ms-3" style="text-align: center;">
+        <div>
+          {% if article.image != "hyperlink_icon" %}
+            <img src="{{article.image}}" class="img-fluid ms-3 my-3 border rounded-1" height="195px" width="195px" alt="{{article.source}}"/>
+          {% else %}
+            <span style="display: inline-block; background-color: #ccccccea; padding: 30px;">
+              <img src="{% static 'imgs/hyperlink_chain_icon.png' %}" class="border rounded-1" height="86px" width="110px" alt="hyperlink icon">
+            </span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="card-body">
+          <h4 class="card-title">{{article.title}}</h4>
+          <p class="card-text fw-semibold mb-2">
+            <a class="link-body-emphasis link-offset-2 link-underline-opacity-0" href="{{article.source_homepage}}" target=”_blank”>
+              {{article.source}}
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="12" fill="blue" class="bi bi-box-arrow-up-right align-baseline" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5"/>
+                <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0z"/>
+              </svg>
+            </a>
+          </p>
+          <p class="card-text mb-2">{{article.pub_date}}</p>
+          <p class="card-text">
+              <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="{{article.link}}" target=”_blank”>
+                🔗 Read this article
+              </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endfor %}
+{% endblock page_content %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_tabs %}
+<a class="nav-link" href="{% url 'videos_page' %}">Videos</a>
+<a class="nav-link" href="{% url 'discussion_page' %}">Discussion</a>
+<a class="nav-link" href="{% url 'news_page' %}">News</a>
+<a class="nav-link active" aria-current="page" href="{% url 'podcasts_page' %}">Podcasts</a>
+{% endblock page_tabs %}
+
+{% block page_header %}
+  <div class="container mb-2">
+    <a class="d-inline-flex align-items-center link-underline link-underline-opacity-0" target="_blank">
+      <img src="{% static 'imgs/python_logo.png' %}" class = "me-3" height="42px" alt="Python logo">
+      <h3>Python Podcasts</h3>
+    </a>
+  </div>
+{% endblock page_header %}
+
+{% block page_content %}
+  {% for episode in episodes %}
+  <section class="card mb-2">
+    <div class="row no-gutters">
+      <div class="col-2 my-auto">
+        <img src="{{episode.image}}" class="img-fluid ms-3 my-3" alt="{{episode.podcast_name}}"/>
+      </div>
+      <div class="col-10">
+        <div class="card-body ms-3">
+          <h3 class="card-title">{{episode.title}}</h3>
+          <p class="card-text">{{episode.description}}</p>
+          <p class="card-text">{{episode.pub_date}}</p>
+          <p class="card-text">
+            <a class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="{{episode.link}}" target="_blank">
+              🎧 Listen to this episode
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endfor %}
+{% endblock page_content %}

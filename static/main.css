@@ -1,38 +1,141 @@
 /* 
-
 Color Palette: https://coolors.co/e63946-f1faee-a8dadc-457b9d-1d3557
 
+CSS specificity (Most -> Least):
+style attribute -> ID -> class, psuedo-class, attribute -> elements 
 */
 
 :root {
-  --red: #e63946;
+  --white: #fff;
   --off-white: #f9f9f9;
-  --blue: #457b9d;
-  --dark-blue: #1d3557;
+  --orange: #ffa500;
+  --dark-orange: #fa7900;
+  --light-blue: #004AAD;
+  --dark-blue: #2f3a9c;
+  --pink-red: #e13b63;
 }
 
 body {
-  min-height: 100vh;
+  padding-top: 150px;
   background-color: var(--off-white);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
-a {
-  color: var(--red);
+footer {
+  padding: 1em;
+  background-color: var(--light-blue);
 }
 
-a:hover,
-a:focus {
-  color: var(--blue);
-  text-decoration: none;
+h3 {
+  margin-bottom: 0.25rem;
+  color: var(--dark-blue);
+  text-transform: uppercase;
+  font-weight: 750;
+  font-size: 1.53rem;
+}
+
+h3:hover {
+  color: var(--pink-red);
+}
+
+.youtube-iframe {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.reddit-iframe {
+  height: 100%;
+  width: 100%;
+}
+
+.navbar {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  background-color: var(--light-blue);
+}
+
+.nav-link {
+  padding: 35px;
+  color: var(--bs-body-color);
+}
+
+.nav-link:hover {
+  --bs-nav-link-hover-color: var(--bs-btn-hover-color);
+  text-decoration: underline;
+  text-decoration-thickness: .1em;
+}
+
+.nav-link.active {
+  color: var(--orange) !important;
+  font-weight: bold;
+}
+
+.nav-link.active:hover {
+  color: var(--dark-orange) !important;
+  text-decoration: underline;
+  text-decoration-thickness: .1em;
+}
+
+.vr {
+  opacity: 25;
+}
+
+.modal-content {
+  width: 100vw;
+  align-items: center;
+  z-index: 500;
+}
+
+.modal-body {
+  border-radius: 2px;
+  padding: 8px;
+  z-index: 501;
+}
+
+.modal-footer .prev {
+  --bs-btn-padding-y: .5rem;
+  --bs-btn-font-size: .75rem;
+}
+
+.modal-footer .next {
+  --bs-btn-padding-y: .5rem;
+  --bs-btn-padding-x: 1.25rem; 
+  --bs-btn-font-size: .75rem;
+}
+
+.close {
+  position: absolute;
+  padding-top: 0px;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-bottom: 3px;
+  right: -16px;
+  top: -16px;
+  color: var(--pink-red);
+  z-index: 502;
+  background: var(--white);
+  border-radius: 100%;
+}
+
+.video {
+  position: relative;
+  padding-bottom: 58%;
+  width: calc(90vw - 50px);
+  max-width: 680px;
+}
+
+#youtube-modal-body {
+  top: 2px;
+}
+
+#reddit-modal-body {
+  top: 0px;
+  width: 30vw; 
 }
 
 #site-logo {
-  max-height: 200px;
-}
-
-footer {
-  padding: 1em;
-  background-color: var(--dark-blue);
+  width: 105px; 
+  height: 95px;
 }

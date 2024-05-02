@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>Content Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="{% static 'main.css' %}" rel="stylesheet" type="text/css">
+  </head>
+  <body class="d-flex flex-column">
+    
+    <nav class="navbar fixed-top border-bottom bg-gradient" data-bs-theme="dark">
+      <div class="row col align-items-center justify-content-evenly gx-lg-5">
+        <div class="col-1 ms-lg-auto me-lg-3">
+          <a class="navbar-brand" href="{% url 'homepage' %}">
+            <img src="{% static 'imgs/content_hub_icon.png' %}" alt="Content Hub Logo" id="site-logo">
+          </a>
+        </div>
+        <div class="col-8 ms-lg-3 me-lg-auto">
+          <div class="navbar-nav flex-row justify-content-evenly pe-lg-3">
+            <!-- Page tabs go here -->
+            {% block page_tabs %}{% endblock page_tabs %}
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page header goes here -->
+    {% block page_header %}{% endblock page_header %}
+    
+    <main class="container mb-2">
+      <div class="row">
+        <div class="col px-1">
+          <!-- Page content goes here -->
+          {% block page_content %}{% endblock page_content %}
+        </div>
+      </div>
+    </main>
+
+    <footer class="container-fluid">
+      <div class="row">
+        <div class="col text-center">
+          <img src="{% static 'imgs/python_powered.svg' %}" alt="Python Powered" height="50px">
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="{% static 'custom_script.js' %}"></script>
+    <script async="" src="https://embed.reddit.com/widgets.js" charset="UTF-8"></script>
+  </body>
+</html>
